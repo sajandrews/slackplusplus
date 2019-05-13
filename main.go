@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	api := slack.New("xoxb-455086501812-611131728262-gbQK2uNh6VgISrCfU65TNOzk")
 
 	rtm := api.NewRTM()
 
