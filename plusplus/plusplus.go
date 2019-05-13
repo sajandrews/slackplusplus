@@ -26,7 +26,6 @@ func Process(rtm Slacker, ev *slack.MessageEvent) error {
 	if strings.Contains(ev.Msg.Text, botID) {
 		err = processBotMessage(rtm, ev, botID)
 	} else {
-		//Lets see if we need to plus anyone!
 		err = processPossiblePlusMessage(rtm, ev)
 	}
 
