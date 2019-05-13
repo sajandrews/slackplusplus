@@ -8,9 +8,9 @@ Redis
 ./slackplusplus -token=slackappoauthtoken
 
 ## Bot commands
-`@user ++` to give kudos
+`@username ++` to give kudos
 
-`@user --` to remove kudos
+`@username --` to remove kudos
 
 `@plusplus @username` to get stats
 
