@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/nlopes/slack"
@@ -8,7 +9,16 @@ import (
 )
 
 func main() {
+	oauthAccessToken := flag.String("token", "", "oauth access token")
 
+	flag.Parse()
+
+	if *oauthAccessToken == "" {
+		fmt.Println("Please pass in a token -token=sometoken")
+		return
+	}
+
+	api := slack.New(*oauthAccessToken)
 	rtm := api.NewRTM()
 
 	go rtm.ManageConnection()

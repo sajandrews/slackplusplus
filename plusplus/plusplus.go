@@ -19,7 +19,6 @@ type Slacker interface {
 }
 
 func Process(rtm Slacker, ev *slack.MessageEvent) error {
-	//	fmt.Printf("%+v\n", ev)
 	var err error
 
 	botID := fmt.Sprintf("<@%s> ", rtm.GetInfo().User.ID)
