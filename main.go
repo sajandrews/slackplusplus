@@ -6,10 +6,16 @@ import (
 
 	"github.com/nlopes/slack"
 	"github.com/sajandrews/slackplusplus/plusplus"
+	"github.com/sajandrews/slackplusplus/redis"
+)
+
+const (
+	defaultRedisDSN = ":6379"
 )
 
 func main() {
 	oauthAccessToken := flag.String("token", "", "oauth access token")
+	redisDSN := flag.String("redis-dsn", defaultRedisDSN, "Redis network string")
 
 	flag.Parse()
 
@@ -17,6 +23,8 @@ func main() {
 		fmt.Println("Please pass in a token -token=sometoken")
 		return
 	}
+
+	redis.SetDSN(*redisDSN)
 
 	api := slack.New(*oauthAccessToken)
 	rtm := api.NewRTM()

@@ -36,9 +36,13 @@ func processPossiblePlusMessage(rtm Slacker, ev *slack.MessageEvent) error {
 	re := regexp.MustCompile(`<@([A-Z0-9]*)>\s*\+\+`)
 	matches := re.FindSubmatch([]byte(ev.Msg.Text))
 
-	if len(matches) == 2 {
-		rdb := redis.GetClient()
+	rdb, err := redis.GetClient()
 
+	if err != nil {
+		return err
+	}
+
+	if len(matches) == 2 {
 		userID := string(matches[1])
 
 		numPlusses, err := rdb.Incr(redis.GetKey(userID)).Result()
@@ -64,8 +68,6 @@ func processPossiblePlusMessage(rtm Slacker, ev *slack.MessageEvent) error {
 	matches = re.FindSubmatch([]byte(ev.Msg.Text))
 
 	if len(matches) == 2 {
-		rdb := redis.GetClient()
-
 		userID := string(matches[1])
 
 		numPlusses, err := rdb.Decr(redis.GetKey(userID)).Result()
@@ -99,13 +101,17 @@ func processBotMessage(rtm Slacker, ev *slack.MessageEvent, botID string) error 
 		}
 	}
 
+	rdb, err := redis.GetClient()
+
+	if err != nil {
+		return err
+	}
+
 	//Lets see if they are asking for stats?
 	re := regexp.MustCompile(`<@([A-Z0-9]*)>`)
 	matches := re.FindSubmatch([]byte(message))
 
 	if len(matches) == 2 {
-		rdb := redis.GetClient()
-
 		userID := string(matches[1])
 
 		numPlusses, err := rdb.Get(redis.GetKey(userID)).Result()

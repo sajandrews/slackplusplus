@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"sync"
@@ -20,9 +21,19 @@ var once sync.Once
 var TestingRDB Rediser
 var rdb Rediser
 
-func GetClient() Rediser {
+var dsn string
+
+func SetDSN(s string) {
+	dsn = s
+}
+
+func GetClient() (Rediser, error) {
 	if flag.Lookup("test.v") != nil && TestingRDB != nil {
-		return TestingRDB
+		return TestingRDB, nil
+	}
+
+	if dsn == "" {
+		return nil, errors.New("Redis DSN not set")
 	}
 
 	once.Do(func() {
@@ -36,7 +47,7 @@ func GetClient() Rediser {
 		})
 	})
 
-	return rdb
+	return rdb, nil
 }
 
 func GetKey(s string) string {
