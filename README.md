@@ -14,4 +14,4 @@ Redis
 
 `@plusplus @username` to get stats
 
-`@plusplus help` for this message`
+`@plusplus help` for this message
