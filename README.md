@@ -1,5 +1,5 @@
 # Slackplusplus
-This is a siimple kudos slack bot
+This is a simple kudos slack bot
 
 ## Prerequisite
 Redis
